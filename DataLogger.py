@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 import pandas as pd
+from openpyxl import load_workbook
+from time import sleep 
 
 
 class DataLogger:
