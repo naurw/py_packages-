@@ -18,7 +18,7 @@ class DataLogger:
 
         self.check_directory()
         self.write_to_excel()
-        
+
     def check_directory(self):
         logs_dir = os.path.join(self.current_path, self.directory)
         if not os.path.exists(logs_dir):
@@ -65,4 +65,15 @@ class DataLogger:
                 writer.save()
             os.chdir(os.pardir)
 
-# logger = DataLogger(data, file_name='my_logs.xlsx', directory='my_logs')
+from datetime import datetime 
+data = pd.DataFrame({
+    'Date': ['2023/04/02', datetime.now().strftime('%Y/%m/%d')],
+    'Time': ['14:23:22', datetime.now().strftime('%H:%M:%S')],
+    'Download' : [124, 156],
+    'Upload' : [32, 33]
+}) 
+df = pd.DataFrame(data)
+logger = DataLogger(data, file_name='my_logs.xlsx', directory='my_logs')
+
+
+DataLogger(data)
