@@ -65,15 +65,5 @@ class DataLogger:
                 writer.save()
             os.chdir(os.pardir)
 
-from datetime import datetime 
-data = pd.DataFrame({
-    'Date': ['2023/04/02', datetime.now().strftime('%Y/%m/%d')],
-    'Time': ['14:23:22', datetime.now().strftime('%H:%M:%S')],
-    'Download' : [124, 156],
-    'Upload' : [32, 33]
-}) 
-df = pd.DataFrame(data)
-logger = DataLogger(data, file_name='my_logs.xlsx', directory='my_logs')
 
-
-DataLogger(data)
+#logger = DataLogger(data, file_name='my_logs.xlsx', directory='my_logs')
