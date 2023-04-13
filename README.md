@@ -1,14 +1,21 @@
 # py_packages
 
+
 ## 🐍 Contents 🐍 
-### `DataLogger` --> v2.1 
-- Universal package for converting dataframes into an exportable Excel file 
-- Default logging script for `SpeedTest` 
-  #### What's new / roadmap? 
-  - Consideration of `PyQt` or `wxPython` over `tkinter` for GUI applications in v3.1 
+### `DataLogger` ***Current version*** --> v2.2 
+- Universal package for converting dataframes into an Excel file in its own directory 
+- Default logging script for `SpeedTest.py` 
+  #### What's new?
+  - Dynamically adjust Excel file column width in v2.2 
+  
+  #### What's to come? 
+  - Consideration of `PyQt` or `wxPython` or `easygui` over `tkinter` for GUI applications in v3.1
      
-### `SpeedTest` --> v4.1 
+### `SpeedTest` ***Current version*** --> v4.2 
 - Package for running network speed(s) test with Twitter login functionality 
-  #### What's new / roadmap? 
-  - Adjustments to CSS selectors for composing and window handling in v4.3  
+  #### What's new? 
+  - Standalone application in v4.2 
+  
+  #### What's to come? 
+  - Adjustments to CSS selectors for composing and more consistent window handling in v4.3
   - Use configuration `.ini` files with `configparser` to parse, optimizations with context managers in v5.1
