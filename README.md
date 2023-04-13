@@ -9,7 +9,6 @@
      
 ### `SpeedTest` --> v4.1 
 - Package for running network speed(s) test with Twitter login functionality 
-  #### What's new /roadmap? 
-  - `if __name__ == "__main__"`: guard for standalone application in v4.2
-  - Adjustments to CSS selectors for composing in v4.2 
+  #### What's new / roadmap? 
+  - Adjustments to CSS selectors for composing and window handling in v4.3  
   - Use configuration `.ini` files with `configparser` to parse, optimizations with context managers in v5.1
