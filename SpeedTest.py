@@ -94,7 +94,7 @@ class SpeedTest:
         retry_counter = 0 
         while True: 
             try: 
-                self._run_speed_test(self.driver) 
+                self._run_speed_test() 
                 break 
             except Exception: 
                 retry_counter += 1 
@@ -114,9 +114,7 @@ class SpeedTest:
         upload = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span')
         upload = float(upload.text)
         return download, upload, isp_provider
-    # problem: 1) if popup browser is not present or hidden, it will not proceed 
-        # driver.current_window_handle 
-        # driver.window_handles to find list 
+
     def _login_to_twitter(self, driver): 
         try: 
             driver.get('http://www.twitter.com')
@@ -192,93 +190,97 @@ class SpeedTest:
             except NoSuchElementException: 
                 print('Unable to locate element--complete manually / XPATH(s) might have changed')
 
-SpeedTest()._run_speed_test() 
+# SpeedTest()._run_speed_test() 
 
 
+if __name__ == '__main__': 
+    speedtest = SpeedTest()
+    speedtest._run_speed_test()
+    speedtest.driver.quit() 
+
+## Optimization ideas 
+
+# import os
+# import sys
+# import time
+# import logging.config
+# import tkinter as tk
+# from pathlib import Path
+# from configparser import ConfigParser
+# from datetime import datetime
+# from time import sleep
+# from dotenv import load_dotenv, find_dotenv
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions
+# from selenium.webdriver.common.keys import Keys
+# from selenium.common.exceptions import (
+#     TimeoutException,
+#     NoSuchElementException,
+#     StaleElementReferenceException,
+#     ElementClickInterceptedException,
+# )
+# from tkinter import messagebox
+# from DataLogger import DataLogger
 
 
+# class SpeedTest:
+#     CONFIG_FILE = 'config.ini'
+#     LOGGING_CONFIG = 'logging.ini'
+#     LOGS_DIR = 'logs'
+#     DATE_FORMAT = '%Y/%m/%d'
+#     TIME_FORMAT = '%H:%M:%S'
+#     RETRY_INTERVAL = 10
+#     MAX_RETRIES = 3
+#     PROMISED_DOWNLOAD = None
+#     CHROME_DRIVER_PATH = None
 
-import os
-import sys
-import time
-import logging.config
-import tkinter as tk
-from pathlib import Path
-from configparser import ConfigParser
-from datetime import datetime
-from time import sleep
-from dotenv import load_dotenv, find_dotenv
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import (
-    TimeoutException,
-    NoSuchElementException,
-    StaleElementReferenceException,
-    ElementClickInterceptedException,
-)
-from tkinter import messagebox
-from DataLogger import DataLogger
+#     def __init__(self):
+#         self.load_config()
+#         self.load_env()
+#         self.init_logging()
+#         self.init_driver()
+#         self.init_dataframe()
+#         self.init_gui()
 
+#     def load_config(self):
+#         parser = ConfigParser()
+#         parser.read(self.CONFIG_FILE)
+#         self.PROMISED_DOWNLOAD = int(parser['SpeedTest']['PROMISED_DOWNLOAD'])
+#         self.CHROME_DRIVER_PATH = parser['SpeedTest']['CHROME_DRIVER_PATH']
 
-class SpeedTest:
-    CONFIG_FILE = 'config.ini'
-    LOGGING_CONFIG = 'logging.ini'
-    LOGS_DIR = 'logs'
-    DATE_FORMAT = '%Y/%m/%d'
-    TIME_FORMAT = '%H:%M:%S'
-    RETRY_INTERVAL = 10
-    MAX_RETRIES = 3
-    PROMISED_DOWNLOAD = None
-    CHROME_DRIVER_PATH = None
+#     def load_env(self):
+#         env_file = find_dotenv()
+#         if env_file:
+#             load_dotenv(env_file)
 
-    def __init__(self):
-        self.load_config()
-        self.load_env()
-        self.init_logging()
-        self.init_driver()
-        self.init_dataframe()
-        self.init_gui()
+#     def init_logging(self):
+#         Path(self.LOGS_DIR).mkdir(exist_ok=True)
+#         logging.config.fileConfig(self.LOGGING_CONFIG)
 
-    def load_config(self):
-        parser = ConfigParser()
-        parser.read(self.CONFIG_FILE)
-        self.PROMISED_DOWNLOAD = int(parser['SpeedTest']['PROMISED_DOWNLOAD'])
-        self.CHROME_DRIVER_PATH = parser['SpeedTest']['CHROME_DRIVER_PATH']
+#     def init_driver(self):
+#         service = Service(self.CHROME_DRIVER_PATH)
+#         options = Options()
+#         options.add_experimental_option('detach', True)
+#         options.add_argument('--start-maximized')
+#         options.page_load_strategy = 'normal'
+#         options.headless = False
+#         self.driver = webdriver.Chrome(service=service, options=options)
 
-    def load_env(self):
-        env_file = find_dotenv()
-        if env_file:
-            load_dotenv(env_file)
+#     def init_dataframe(self):
+#         self.df = pd.DataFrame(columns=['Date', 'Time', 'Download', 'Upload'])
 
-    def init_logging(self):
-        Path(self.LOGS_DIR).mkdir(exist_ok=True)
-        logging.config.fileConfig(self.LOGGING_CONFIG)
+#     def init_gui(self):
+#         self.gui = tk.Tk()
+#         self.gui.withdraw()
 
-    def init_driver(self):
-        service = Service(self.CHROME_DRIVER_PATH)
-        options = Options()
-        options.add_experimental_option('detach', True)
-        options.add_argument('--start-maximized')
-        options.page_load_strategy = 'normal'
-        options.headless = False
-        self.driver = webdriver.Chrome(service=service, options=options)
-
-    def init_dataframe(self):
-        self.df = pd.DataFrame(columns=['Date', 'Time', 'Download', 'Upload'])
-
-    def init_gui(self):
-        self.gui = tk.Tk()
-        self.gui.withdraw()
-
-    def run_speed_test(self):
-        start_time = time.time()
-        self.logger.info('Loading speedtest.net')
-        self.driver.get('http://www.speedtest.net')
-        WebDriverWait(self.driver, 120).until(expected_conditions.presence_of_element_located((By.TAG_NAME, 'body')))
-        loading_time = time.time() - start_time
-        self.log_date = datetime.now().strftime(self.DATE_FORMAT)
+#     def run_speed_test(self):
+#         start_time = time.time()
+#         self.logger.info('Loading speedtest.net')
+#         self.driver.get('http://www.speedtest.net')
+#         WebDriverWait(self.driver, 120).until(expected_conditions.presence_of_element_located((By.TAG_NAME, 'body')))
+#         loading_time = time.time() - start_time
+#         self.log_date = datetime.now().strftime(self.DATE_FORMAT)
