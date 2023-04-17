@@ -9,7 +9,7 @@
   - Dynamically adjust Excel file column width in v2.2 
   
   #### What's to come? 
-  - Consideration of `PyQt` or `wxPython` or `easygui` over `tkinter` for GUI applications in v3.1
+  - Multi dataframe compiler method in v3.1  
      
 ### `SpeedTest` ***Current version*** --> v4.2 
 - Package for running network speed(s) test with Twitter login functionality 
