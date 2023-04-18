@@ -1,15 +1,17 @@
 # py_packages
-
+>Contributor: Will
 
 ## 🐍 Contents 🐍 
-### `DataLogger` ***Current version*** --> v2.2 
-- Universal package for converting dataframes into an Excel file in its own directory 
+### `DataLogger` ***Current version*** --> v2.1 
+- Package for converting dataframes into an Excel file in its own directory 
 - Default logging script for `SpeedTest.py` 
   #### What's new?
   - Dynamically adjust Excel file column width in v2.2 
+  - Fix errors that cause .xlsx file to corrupt in v2.2 likely raised by MIME type of file  
   
   #### What's to come? 
-  - Multi dataframe compiler method in v3.1  
+  - Multi dataframe compiler method in v3.1
+  - `contextmanager` to reduce potential errors from occurring in v3.1
      
 ### `SpeedTest` ***Current version*** --> v4.2 
 - Package for running network speed(s) test with Twitter login functionality 
