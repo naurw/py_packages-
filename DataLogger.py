@@ -99,7 +99,7 @@ class DataLogger:
             messagebox.showinfo(title='Warning', message=message)
             sleep(3)
 
-            with pd.ExcelWriter(self.file_name, engine='openpyxl', mode='a', if_sheet_exists='replace', options = {'sheet_state' : 'visible'}, engine_kwargs = kwargs) as writer:
+            with pd.ExcelWriter(self.file_name, engine='openpyxl', mode='a', if_sheet_exists='replace', engine_kwargs = {'options' : {'sheet_state' : 'visible'}}) as writer:
                 if mimetypes.guess_type(self.file_name)[0] in ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']:
                     print('File is the formats: vnd.ms-excel or vnd.openxml formats')
                     existing_df = pd.read_excel(self.file_name)
