@@ -11,6 +11,7 @@ DataLogger.py is a module that enables a simpler way to log data to an Excel fil
   
   #### What's to come? 
   - Integrate user inputs to determine whether or not adjustments to cells is desired and create a limit in cell size in v2.3
+  - Add and create dataframes to an existing Excel file into its own Sheet in v3.1
   - Multi dataframe compiler method with `contextmanager` in the works in v3.1 
      
 ### `SpeedTest` ***Current version*** --> v4.2 
