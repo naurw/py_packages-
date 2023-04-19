@@ -2,7 +2,7 @@
 >Contributor: Will
 
 ## 🐍 Contents 🐍 
-### `DataLogger` ***Current version*** --> v2.1 
+### `DataLogger` ***Current version*** --> v2.2 
 - Package for converting dataframes into an Excel file in its own directory 
 - Default logging script for `SpeedTest.py` 
   #### What's new?
