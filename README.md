@@ -3,15 +3,15 @@
 
 ## 🐍 Contents 🐍 
 ### `DataLogger` ***Current version*** --> v2.2 
-- Package for converting dataframes into an Excel file in its own directory 
+DataLogger.py is a module that enables a simpler way to log data to an Excel file (with it's own directory based on your current working directory) while dynamically adjusting the column widths to optimize readability for the user.
 - Default logging script for `SpeedTest.py` 
   #### What's new?
   - Dynamically adjust Excel file column width in v2.2 
-  - Fix errors that cause .xlsx file to corrupt in v2.2 likely raised by MIME type of file  
+  - Fixed errors that cause .xlsx file to corrupt and other potential errors that may be raised in v2.2
   
   #### What's to come? 
-  - Multi dataframe compiler method in v3.1
-  - `contextmanager` to reduce potential errors from occurring in v3.1
+  - Integrate user inputs to determine whether or not adjustments to cells is desired and create a limit in cell size in v2.3
+  - Multi dataframe compiler method with `contextmanager` in the works in v3.1 
      
 ### `SpeedTest` ***Current version*** --> v4.2 
 - Package for running network speed(s) test with Twitter login functionality 
