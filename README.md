@@ -2,8 +2,8 @@
 >Contributor: Will
 
 ## 🐍 Contents 🐍 
-### `DataLogger` ***Current version*** --> v2.2 
-DataLogger.py is a module that enables a simpler way to log data to an Excel file (with it's own directory based on your current working directory) while dynamically adjusting the column widths to optimize readability for the user.
+### `DataLogger.py` ***Current version*** --> v2.2 
+>DataLogger is a module that enables a simpler way to log data dynamically to an Excel file (with it's own directory based on your current working directory) while optimizing readability for the user.
 - Default logging script for `SpeedTest.py` 
   #### What's new?
   - Dynamically adjust Excel file column width in v2.2 
@@ -17,11 +17,11 @@ DataLogger.py is a module that enables a simpler way to log data to an Excel fil
   - Multi dataframe compiler method with `contextmanager` in the works in v3.1 
 
 ### `pbar.py` ***Current version*** --> v1.1 
-pbar.py is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view. It also serves as a directory locator to see if the said directory exists before opening files inputted by the user. 
-- Default progress bar for `DataLogger.py` 
+>ProgressBar is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
+- Default progress bar script for `DataLogger.py` 
 
-### `SpeedTest` ***Current version*** --> v4.2 
-- Package for running network speed(s) test with Twitter login functionality 
+### `SpeedTest.py` ***Current version*** --> v4.2 
+>SpeedTest is a standalone application that runs network speed test(s) with a data logging functionality. It allows for the user to complain about poor network performances via Twitter.  
   #### What's new? 
   - Standalone application in v4.2 
   
