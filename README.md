@@ -17,7 +17,7 @@ DataLogger.py is a module that enables a simpler way to log data to an Excel fil
   - Multi dataframe compiler method with `contextmanager` in the works in v3.1 
 
 ### `pbar.py` ***Current version*** --> v1.1 
-pbar.py is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view
+pbar.py is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view. It also serves as a directory locator to see if the said directory exists before opening files inputted by the user. 
 - Default progress bar for `DataLogger.py` 
 
 ### `SpeedTest` ***Current version*** --> v4.2 
