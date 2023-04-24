@@ -15,7 +15,11 @@ DataLogger.py is a module that enables a simpler way to log data to an Excel fil
   - Refine try-except error handling in v2.3 
   - Add and create dataframes to an existing Excel file into its own Sheet in v3.1
   - Multi dataframe compiler method with `contextmanager` in the works in v3.1 
-     
+
+### `pbar.py` ***Current version*** --> v1.1 
+pbar.py is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view
+- Default progress bar for `DataLogger.py` 
+
 ### `SpeedTest` ***Current version*** --> v4.2 
 - Package for running network speed(s) test with Twitter login functionality 
   #### What's new? 
