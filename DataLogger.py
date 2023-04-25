@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter.messagebox import askyesno
 import os
 import pandas as pd 
 from openpyxl import load_workbook
@@ -8,6 +9,13 @@ from openpyxl.workbook import workbook, Workbook
 from time import sleep 
 from contextlib import contextmanager
 import mimetypes 
+import platform 
+import subprocess 
+from tqdm import tqdm 
+
+# import sys 
+# sys.path.append('/Users/William/Desktop/py_packages-')
+# from pbar import ProgressBar 
 
 workbook.WB_VIEW_NORMAL = 'Sheet View'
 
@@ -40,17 +48,50 @@ class DataLogger:
         print(self.new_path)
     
     def adjust_col_width(self, sheet): 
-        for col in range(1, sheet.max_column + 1): 
-            column_letter = get_column_letter(col)
-            max_length = 0 
-            for cell in sheet[column_letter]:
-                try: 
-                    if len(str(cell.value)) > max_length: 
-                        max_length = len(str(cell.value)) 
-                except Exception as e: 
-                    print(f'Error Occured: {e}')
-            adjusted_width = (max_length + 1) 
-            sheet.column_dimensions[column_letter].width = adjusted_width
+        try: 
+            max_col_width = int(input('Enter the maximum desired column width: '))
+            if max_col_width > 50:
+                print(f'Value too high. Using default max value of 50.')
+                max_col_width = 50
+                for col in range(1, sheet.max_column + 1): 
+                    column_letter = get_column_letter(col)
+                    max_length = 0 
+                    for cell in sheet[column_letter]:
+                        try: 
+                            if len(str(cell.value)) > max_length: 
+                                max_length = len(str(cell.value)) 
+                        except Exception as e: 
+                            print(f'Error Occured: {e}')
+
+                    adjusted_width = min(max_col_width, max_length + 1) # allows for user adjustments while selecting the mininum possible length necessary to keep readability 
+
+                    sheet.column_dimensions[column_letter].width = adjusted_width
+        except ValueError: 
+            print('Invalid input. Using default max value of column_length.')
+            for col in range(1, sheet.max_column + 1): 
+                column_letter = get_column_letter(col)
+                max_length = 0 
+                for cell in sheet[column_letter]:
+                    try: 
+                        if len(str(cell.value)) > max_length: 
+                            max_length = len(str(cell.value)) 
+                    except Exception as e: 
+                        print(f'Error Occured: {e}')
+                adjusted_width = (max_length + 1) 
+                sheet.column_dimensions[column_letter].width = adjusted_width
+        # for col in range(1, sheet.max_column + 1): 
+        #     column_letter = get_column_letter(col)
+        #     max_length = 0 
+        #     for cell in sheet[column_letter]:
+        #         try: 
+        #             if len(str(cell.value)) > max_length: 
+        #                 max_length = len(str(cell.value)) 
+        #         except Exception as e: 
+        #             print(f'Error Occured: {e}')
+
+        #     adjusted_width = min(max_col_width, max_length + 1) # allows for user adjustments while selecting the mininum possible length necessary to keep readability 
+
+        #     sheet.column_dimensions[column_letter].width = adjusted_width
 
 ### Simpler method for adjust_col_width() 
 # from openpyxl.utils import column_width_from_pixel
@@ -84,6 +125,7 @@ class DataLogger:
                                     print(f'Error Occured: {e}')
                             adjusted_width = (max_length + 1) 
                             sheet.column_dimensions[column_letter].width = adjusted_width 
+                
             else:
                 message = f'{file_path} has been found... opening and appending'
                 messagebox.showinfo(title='File Found', message=message)
@@ -92,33 +134,35 @@ class DataLogger:
                     self.df.to_excel(writer, sheet_name='Sheet1', index=False)
                     for sheet in writer.book.worksheets: 
                         self.adjust_col_width(sheet)
-
+        
             os.chdir(os.pardir)
+
+            self.open_file() 
         except Exception as e:
             message = f'Error occurred:\n{e}\n\nRetrying with alternative method'
             messagebox.showinfo(title='Warning', message=message)
             sleep(3)
 
             with pd.ExcelWriter(self.file_name, engine='openpyxl', mode='a', if_sheet_exists='replace', engine_kwargs = {'options' : {'sheet_state' : 'visible'}}) as writer:
-                if mimetypes.guess_type(self.file_name)[0] in ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']:
-                    print('File is the formats: vnd.ms-excel or vnd.openxml formats')
-                    existing_df = pd.read_excel(self.file_name)
-                else: 
-                    try:
+                try: 
+                    if mimetypes.guess_type(self.file_name)[0] in ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']:
+                        print('File is the formats: vnd.ms-excel or vnd.openxml formats')
+                        existing_df = pd.read_excel(self.file_name)
+                    else: 
                         print('File is not the in the accepted pd.read_excel formats... using alt method') 
                         existing_file = pd.ExcelFile(self.file_name)
                         existing_df = existing_file.parse(sheet_name = 'Sheet1')
-                    except Exception as e: 
-                        print(f'Error occured: {e}')
+                except Exception as e: 
+                    print(f'Error occured: {e}')
 
-                messagebox.showinfo(title = 'Previous Data', message = f'\n\n{existing_df.tail(5)}')
+                # messagebox.showinfo(title = 'Previous Data', message = f'\n\n{existing_df.tail(5)}')
                 book = load_workbook(self.file_name)
                 writer.book = book
-                active_sheet = book.active 
-                messagebox.showinfo(message = f'{self.file_name} is currently active\n\nActive Sheet: {active_sheet}\nSheet Title:{active_sheet.title}')
+                # active_sheet = book.active 
+                # messagebox.showinfo(message = f'{self.file_name} is currently active\n\nActive Sheet: {active_sheet}\nSheet Title:{active_sheet.title}')
                 writer.sheets = {ws.title: ws for ws in writer.book.worksheets}
                 new_df = pd.concat([existing_df, self.df], axis=0, ignore_index=True)
-                messagebox.showinfo(title = 'Updated Data', message = f'\n\n{new_df.tail(5)}')
+                # messagebox.showinfo(title = 'Updated Data', message = f'\n\n{new_df.tail(5)}')
 
                 sheet_names = book.sheetnames 
                 for sheet_name in sheet_names: 
@@ -128,6 +172,37 @@ class DataLogger:
 
             os.chdir(os.pardir)
 
+            self.open_file() 
+
+    def open_file(self): 
+        try: 
+            # for i in tqdm(range(100), desc='Opening file', unit='%', ncols=70): # progress bar length set to 70 chars wide 
+            #     sleep(0.03) # animation set at 0.03
+
+            with tqdm(total = 100, desc = 'Opening File', unit = '%', ncols = 70) as pbar: 
+                for i in range(100): 
+                    pbar.update(1) 
+                    sleep(0.03) 
+
+            answer = messagebox.askyesno(title = 'File', message = 'Do you want to open file?')
+            if answer: 
+                if platform.system() == 'Windows': 
+                    os.system(f'start {os.path.join(self.new_path, self.file_name)}')
+                elif platform.system() == 'Darwin': 
+                    subprocess.run(['open', os.path.join(self.new_path, self.file_name)])
+                elif platform.system() == 'Linux': 
+                    print('Wow you special')
+                    subprocess.run(['xdg-open', os.path.join(self.new_path, self.file_name)])
+            
+        except FileNotFoundError as e: 
+            print(f'Error has occured: {e}')
+        finally: 
+            print('Completed')
+            self.gui.destroy()
+
+        self.gui.mainloop()
+        
+        
 
 data = pd.DataFrame({
     'col1': ['hello this', 'is just'],
@@ -137,9 +212,6 @@ data = pd.DataFrame({
 })
 logger = DataLogger(data, file_name='my_logs.xlsx', directory='my_logs')
 logger
-
-
-
 
 
 
