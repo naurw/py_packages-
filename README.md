@@ -2,17 +2,16 @@
 >Contributor: Will
 
 ## 🐍 Contents 🐍 
-### `DataLogger.py` ***Current version*** --> v2.2 
+### `DataLogger.py` ***Current version*** --> v2.3
 >DataLogger is a module that enables a simpler way to log data dynamically to an Excel file (with it's own directory based on your current working directory) while optimizing readability for the user.
 - Default logging script for `SpeedTest.py` 
   #### What's new?
-  - Dynamically adjust Excel file column width in v2.2 
-  - Fixed errors that cause .xlsx file to corrupt and other potential errors that may be raised in v2.2
+  - Integrated user inputs with a max threshold to determine columnar sizes 
+  - Progress bar with operating system(s) interactions
+  - Refined try/except blocks 
   
-  #### What's to come? 
-  - Integrate user inputs to determine whether or not adjustments to cells is desired and create a limit in cell size in v2.3
-  - Option to open Excel file at the end after creation in v2.3 
-  - Refine try-except error handling in v2.3 
+  #### What's to come?
+  - Replacing procedural progress bar with OOP from pbar in v2.3.1
   - Add and create dataframes to an existing Excel file into its own Sheet in v3.1
   - Multi dataframe compiler method with `contextmanager` in the works in v3.1 
 
