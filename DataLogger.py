@@ -12,6 +12,7 @@ import mimetypes
 import platform 
 import subprocess 
 from tqdm import tqdm 
+from pbar import ProgressBar 
 
 # import sys 
 # sys.path.append('/Users/William/Desktop/py_packages-')
@@ -179,21 +180,27 @@ class DataLogger:
             # for i in tqdm(range(100), desc='Opening file', unit='%', ncols=70): # progress bar length set to 70 chars wide 
             #     sleep(0.03) # animation set at 0.03
 
-            with tqdm(total = 100, desc = 'Opening File', unit = '%', ncols = 70) as pbar: 
-                for i in range(100): 
-                    pbar.update(1) 
-                    sleep(0.03) 
+            # with tqdm(total = 100, desc = 'Opening File', unit = '%', ncols = 70) as pbar: 
+            #     for i in range(100): 
+            #         pbar.update(1) 
+            #         sleep(0.03) 
 
-            answer = messagebox.askyesno(title = 'File', message = 'Do you want to open file?')
-            if answer: 
-                if platform.system() == 'Windows': 
-                    os.system(f'start {os.path.join(self.new_path, self.file_name)}')
-                elif platform.system() == 'Darwin': 
-                    subprocess.run(['open', os.path.join(self.new_path, self.file_name)])
-                elif platform.system() == 'Linux': 
-                    print('Wow you special')
-                    subprocess.run(['xdg-open', os.path.join(self.new_path, self.file_name)])
+
+
+            # answer = messagebox.askyesno(title = 'File', message = 'Do you want to open file?')
+            # if answer: 
+            #     if platform.system() == 'Windows': 
+            #         os.system(f'start {os.path.join(self.new_path, self.file_name)}')
+            #     elif platform.system() == 'Darwin': 
+            #         subprocess.run(['open', os.path.join(self.new_path, self.file_name)])
+            #     elif platform.system() == 'Linux': 
+            #         print('Wow you special')
+            #         subprocess.run(['xdg-open', os.path.join(self.new_path, self.file_name)])
             
+
+            pbar = ProgressBar(file_name = self.file_name, directory = self.directory)
+            pbar.find_folder() 
+            pbar.open_file() 
         except FileNotFoundError as e: 
             print(f'Error has occured: {e}')
         finally: 
