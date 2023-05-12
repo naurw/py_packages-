@@ -190,8 +190,8 @@ class SpeedTest:
             except NoSuchElementException: 
                 print('Unable to locate element--complete manually / XPATH(s) might have changed')
 
-# SpeedTest()._run_speed_test() 
-
+SpeedTest()._run_speed_test() 
+DataLogger
 
 if __name__ == '__main__': 
     speedtest = SpeedTest()
