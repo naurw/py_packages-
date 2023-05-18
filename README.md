@@ -2,7 +2,7 @@
 >Contributor: Will
 
 ## 🐍 Contents 🐍 
-### `DataLogger.py` ***Current version*** --> 2.3.1 🚧 🏗️ 🚧  --> v3.1.1
+### `DataLogger.py` ***Current version*** --> v3.1.1
 >DataLogger is a universal class object that enables a more convenient way to log data dynamically to an Excel file while optimizing readability and accessibility for the user. 
 - Default logging script for `SpeedTest.py` 
   #### What's new?
@@ -10,6 +10,7 @@
   - Visual cues/aids with operating system(s) interactions
   - Ingest single or multiple dataframes into a new or existing Excel file with its own sheet per dataframe 
   - Added additional flexibility and refined logic for scalability 
+  - Highlights newly concatenated records with each revision of the existing .xlsx
   
   #### What's to come?
   - TBD 
