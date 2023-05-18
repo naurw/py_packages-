@@ -15,7 +15,7 @@
   #### What's to come?
   - TBD 
 
-### `pbar.py` ***Current version*** --> v1.1.1 
+### `gui_add_ons/pbar.py` ***Current version*** --> v1.1.1 
 >ProgressBar is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
 - Default progress bar script for `DataLogger.py` 
 
