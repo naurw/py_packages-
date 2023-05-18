@@ -191,7 +191,7 @@ class DataLogger:
                         sheet = book['Sheet1']
                         for row_idx, row in enumerate(sheet.iter_rows(min_row=2, min_col=1, values_only=True), start=2): # iterates over the rows of the worksheet starting from a set starting row. returns iterable of Cell objects for each row. Ensures we get the cell values instead of ALL of the cells' objects. Enumerate to get both the row index and the row values during iteration. Start =2 sets the starting value of the row index
                             for col_idx, value in enumerate(row, 1):
-                                if row_idx > last_row: 
+                                if row_idx > last_row + 1: 
                                     cell = sheet.cell(row = row_idx, column = col_idx)
                                     cell.fill = PatternFill(start_color='C4D9F2', end_color='C4D9F2', fill_type='solid')
                                 
@@ -229,6 +229,11 @@ class DataLogger:
                                 new_df = pd.concat([existing_df_sheet, df], axis=0, ignore_index=True)
                                 new_df.style.apply(lambda x: ['background-color: #C4D9F2' if x.name >= last_row else ''], axis=1) # temporary function for creating background colors 
                                 new_data.append(new_df)
+                                for row_idx, row in enumerate(sheet.iter_rows(min_row=2, min_col=1, values_only=True), start=2): # iterates over the rows of the worksheet starting from a set starting row. returns iterable of Cell objects for each row. Ensures we get the cell values instead of ALL of the cells' objects. Enumerate to get both the row index and the row values during iteration. Start =2 sets the starting value of the row index
+                                    for col_idx, value in enumerate(row, 1):
+                                        if row_idx > last_row + 1: 
+                                            cell = sheet.cell(row = row_idx, column = col_idx)
+                                            cell.fill = PatternFill(start_color='C4D9F2', end_color='C4D9F2', fill_type='solid')
                             else:
                                 new_data.append(df) # If there are no overlapping columns, it treats it as a new dataframe and add it to the list of dataframes 
                             
