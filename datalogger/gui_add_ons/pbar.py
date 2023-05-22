@@ -13,21 +13,25 @@ class ProgressBar:
         self.file_name = file_name 
         self.new_path = os.getcwd()
         self.directory = directory
-        # self.destroyed = False # initialize the flag 
-        
-        # self.find_folder() 
 
         if self.gui.winfo_exists():
-            self.gui.event_generate("<<ThemeChanged>>") # addresses error when application is closed or destroyed before event being generated is processed. if window has already been destroyed, then event will not be genereated 
+            self.gui.event_generate("<<ThemeChanged>>") 
 
-    def find_folder(self): # recursively iterate over all directories and subdirectories 
+    def find_folder_and_files(self): # recursively iterate over all directories and subdirectories and list the files present 
+        file_names = []
         for root, dirs, files in os.walk(self.new_path): 
             if self.directory in dirs: 
                 print(f'Directory found: {self.new_path}/{self.directory}')
                 self.new_path = os.path.join(root, self.directory)
-                return self.new_path
+                for file in os.listdir(self.new_path): 
+                    file_names.append(file)
+                break
+            else: 
+                print('Directory not found.')
+                return None 
+            
+        return self.new_path, file_names 
 
-        return None  
     
     def open_file(self): 
         try: 
@@ -52,13 +56,6 @@ class ProgressBar:
 
         finally: 
             print('Completed')
-            # if not self.destroyed: # add a flag for handling if .destroyed() 
-            #     self.gui.destroy() 
-            #     self.destroyed = True 
-            
-
-
-        # self.gui.mainloop() 
 
 
 # pbar = ProgressBar()

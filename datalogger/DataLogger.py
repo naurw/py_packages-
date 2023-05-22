@@ -4,12 +4,10 @@ import os
 import pandas as pd 
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
-from openpyxl.workbook import workbook, Workbook 
+from openpyxl.workbook import workbook 
 from openpyxl.styles import PatternFill
 from time import sleep 
-from contextlib import contextmanager
 import mimetypes 
-
 from tqdm import tqdm 
 import platform 
 import subprocess
@@ -17,8 +15,7 @@ import subprocess
 # os.getcwd()
 # import sys 
 # sys.path.append(os.path.join(os.getcwd(), 'Desktop/py_packages-/datalogger/gui_add_ons'))
-# import pbar 
-# from .gui_add_ons.pbar import ProgressBar 
+# from pbar import ProgressBar 
 
 workbook.WB_VIEW_NORMAL = 'Sheet View'
 
@@ -284,8 +281,8 @@ class DataLogger:
 
         self.gui.mainloop() # potential infinite looping / leaked semaphore(s) 
         
-        
-## Testing for singular dataframes 
+
+# Testing for singular dataframes 
 data = pd.DataFrame({
     'col1': ['hello this', 'is just'],
     'col2': ['random strings', 'in four'],
@@ -295,17 +292,17 @@ data = pd.DataFrame({
 logger = DataLogger(data, file_name='my_logs.xlsx', directory='my_logs')
 
 
-## Testing for multiple dataframes 
-import numpy as np 
-np.random.seed(42)
+# ## Testing for multiple dataframes 
+# import numpy as np 
+# np.random.seed(42)
 
-arr = np.random.rand(2,4)
-df1 = pd.DataFrame(arr, columns= ['col1', 'col2', 'col3', 'col4'])
-df1.name = 'np array 1'
-arr2 = np.random.rand(2,4) * 100
-df2 = pd.DataFrame(arr2, columns = ['col1', 'col2', 'col3', 'col4'])
+# arr = np.random.rand(2,4)
+# df1 = pd.DataFrame(arr, columns= ['col1', 'col2', 'col3', 'col4'])
+# df1.name = 'np array 1'
+# arr2 = np.random.rand(2,4) * 100
+# df2 = pd.DataFrame(arr2, columns = ['col1', 'col2', 'col3', 'col4'])
 
-df_list = [data, df1, df2]
-logger_mult = DataLogger(df_list, file_name='my_logs.xlsx', directory='my_logs')
-logger_mult
+# df_list = [data, df1, df2]
+# logger_mult = DataLogger(df_list, file_name='my_logs.xlsx', directory='my_logs')
+# logger_mult
 
