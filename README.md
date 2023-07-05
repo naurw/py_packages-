@@ -14,10 +14,10 @@
   #### Package Contents
   - `DataLogger.py` GUI 
   - `DataExport.py` non-GUI
+  - `gui_add_ons/pbar.py` 
 
-### `datalogger/gui_add_ons/pbar.py` ***Current version*** --> v1.1.1 
->ProgressBar is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
-- Default progress bar script for `DataLogger.py` 
+### `pbar_popup.py` ***Current version*** --> v1.1.1 
+>ProgressBar is a module that displays a progress bar in a GUI application in response to user inputs and interactions with operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
 
 ### `SpeedTest.py` ***Current version*** --> v4.2 🚧 🏗️ 🚧 --> TBD 
 >SpeedTest is a standalone application that runs network speed test(s) with a data logging functionality. It allows for the user to complain about poor network performances via Twitter.  
