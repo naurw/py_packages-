@@ -2,8 +2,8 @@
 >Contributor: Will
 
 ## 🐍 Contents 🐍 
-### `DataLogger.py` ***Current version*** --> v3.1.2
->DataLogger is a universal class object that enables a more convenient way to log data dynamically to an Excel file while optimizing readability and accessibility for the user. 
+### `datalogger` ***Current version*** --> v3.1.2
+>datalogger is a universal package that enables a more convenient way to log data dynamically to an Excel file while optimizing readability and accessibility for the user. 
 - Default logging script for `SpeedTest.py` 
   #### What's new?
   - Integrated user inputs with an input validation to compute ideal columnar sizes 
@@ -11,11 +11,11 @@
   - Ingest single or multiple dataframes into a new or existing Excel file with its own sheet per dataframe 
   - Added additional flexibility by breaking functions into subfunctions and refined logic for scalability 
   - Highlights newly concatenated records with each revision of the existing .xlsx
-  
-  #### What's to come?
-  - TBD 
+  #### Package Contents
+  - `DataLogger.py` GUI 
+  - `DataExport.py` non-GUI
 
-### `gui_add_ons/pbar.py` ***Current version*** --> v1.1.1 
+### `datalogger/gui_add_ons/pbar.py` ***Current version*** --> v1.1.1 
 >ProgressBar is a module that displays a progress bar in the console while interacting with user inputs and operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
 - Default progress bar script for `DataLogger.py` 
 
