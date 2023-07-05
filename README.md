@@ -2,6 +2,7 @@
 >Contributor: Will
 
 ## 🐍 Contents 🐍 
+## **Packages**
 ### `datalogger` ***Current version*** --> v3.1.2
 >datalogger is a universal package that enables a more convenient way to log data dynamically to an Excel file while optimizing readability and accessibility for the user. 
 - Default logging script for `SpeedTest.py` 
@@ -14,8 +15,10 @@
   #### Package Contents
   - `DataLogger.py` GUI 
   - `DataExport.py` non-GUI
-  - `gui_add_ons/pbar.py` 
+  - `gui_add_ons/pbar.py`
 
+
+## **Scripts**
 ### `pbar_popup.py` ***Current version*** --> v1.1.1 
 >ProgressBar is a module that displays a progress bar in a GUI application in response to user inputs and interactions with operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
 
