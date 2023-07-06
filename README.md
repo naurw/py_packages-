@@ -19,6 +19,9 @@
 
 
 ## **Scripts**
+### `zillow.py` ***Current version*** --> v0.1.0 (beta) 
+>Scraper is designed to aid in scraping rental properties in the zipcode of your choice and aggregates them into an Excel sheet for ease of distribution!
+
 ### `pbar_popup.py` ***Current version*** --> v1.1.1 
 >ProgressBar is a module that displays a progress bar in a GUI application in response to user inputs and interactions with operating system(s) to open a file into the user's view. It also serves as a directory verifier to see if user inputs are correct. 
 
