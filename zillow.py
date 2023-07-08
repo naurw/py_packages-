@@ -101,6 +101,8 @@ logger = DataExport(df, file_name = 'housing_data_070523', directory = 'my_logs'
 
 
 # Converting to more modular format 
+## Removing draft once testing has been completed 
+## Do be advised that Zillow has a bot detection program in place--use at your own discretion 
 
 import os
 import pandas as pd
@@ -111,8 +113,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By 
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait 
-from selenium.webdriver.common.action_chains import ActionChains
-import datalogger 
+# from selenium.webdriver.common.action_chains import ActionChains
+from datetime import datetime 
 from datalogger.DataExport import DataExport
 import os 
 
@@ -124,6 +126,7 @@ class Scraper:
         self.config = config
         self.driver = self.init_driver()
         self.data = pd.DataFrame()
+        self.date = datetime.now().strftime("%m%d%y")
 
     def init_driver(self):
         s = Service(self.config['CHROME_DRIVER_PATH'])
@@ -166,13 +169,20 @@ class Scraper:
         self.data['Info'] = info_text
 
     def log_data(self):
-        logger = DataExport(self.data, file_name='housing_data_070523', directory='my_logs')
+        print(self.data.head(5))
+        sleep(5)
+        logger = DataExport(self.data, file_name=f'housing_data_{self.date}', directory='my_logs')
+
+    def reset_zipcode(self): 
+        self.config['ZIP_CODE'] = None 
 
     def run(self):
         self.prompt_user_for_zipcode()
         self.load_url()
         self.parse_html()
         self.log_data()
+        self.reset_zipcode()
+        self.driver.quit()  
 
 def main():
     config = {
