@@ -18,7 +18,7 @@
   - `gui_add_ons/pbar.py`
 
 
-## **Scripts**
+## **Scripts: Misc.**
 ### `zillow.py` ***Current version*** --> v0.1.0 (beta) 
 >Scraper is designed to aid in scraping rental properties in the zipcode of your choice and aggregates them into an Excel sheet for ease of distribution!
 
