@@ -171,7 +171,7 @@ class Scraper:
     def log_data(self):
         print(self.data.head(5))
         sleep(5)
-        logger = DataExport(self.data, file_name=f'housing_data_{self.date}', directory='my_logs')
+        logger = DataExport(self.data, file_name=f'housing_data_{self.date}.xlsx', directory='my_logs')
 
     def reset_zipcode(self): 
         self.config['ZIP_CODE'] = None 
@@ -202,6 +202,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
