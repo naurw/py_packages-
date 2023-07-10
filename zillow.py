@@ -48,23 +48,67 @@ class Scraper:
         URL = f'{self.config["URL"]}/{self.config["ZIP_CODE"]}/'
         self.driver.get(URL)
         WebDriverWait(self.driver, 120).until(expected_conditions.presence_of_element_located((By.TAG_NAME, 'body')))
+    
+    # Single instance webpage handling (scroll down for dynamic)
+    # def parse_html(self):
+    #     soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+    #     listings = soup.select('[class$="property-card-data"]')
 
+    #     listing_links = [listing.find('a')['href'] for listing in listings]
+    #     self.data['Href'] = listing_links
+
+    #     listing_address = [listing.find('address').text for listing in listings]
+    #     self.data['Address'] = listing_address
+
+    #     listing_price = [listing.find('span', {'data-test': 'property-card-price'}).text[:-3] for listing in listings]
+    #     self.data['Price'] = listing_price
+
+    #     info_whole = [listing.find('ul', {'class': 'StyledPropertyCardHomeDetailsList-c11n-8-89-0__sc-1xvdaej-0 GlipV'}) for listing in listings]
+    #     info_text = [[li.text for li in ul.find_all('li')] for ul in info_whole]
+    #     self.data['Info'] = info_text
+
+
+    # Modifying parse_html() to accomodate dynamic webpage following the limit set by scroll_down() 
     def parse_html(self):
-        soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-        listings = soup.select('[class$="property-card-data"]')
+        self.data = pd.DataFrame(columns=['Href', 'Address', 'Price', 'Info'])  # initializing the dataframe with column names
 
-        listing_links = [listing.find('a')['href'] for listing in listings]
-        self.data['Href'] = listing_links
+        while True:
+            # Initialize a new soup object each time after scrolling
+            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+            listings = soup.select('[class$="property-card-data"]')
 
-        listing_address = [listing.find('address').text for listing in listings]
-        self.data['Address'] = listing_address
+            for listing in listings:
+                href = listing.find('a')['href']
+                address = listing.find('address').text
+                price = listing.find('span', {'data-test': 'property-card-price'}).text[:-3]
+                info_whole = listing.find('ul', {'class': 'StyledPropertyCardHomeDetailsList-c11n-8-89-0__sc-1xvdaej-0 GlipV'})
+                info = [li.text for li in info_whole.find_all('li')]
 
-        listing_price = [listing.find('span', {'data-test': 'property-card-price'}).text[:-3] for listing in listings]
-        self.data['Price'] = listing_price
+                # Check if href already exists in our data
+                if not any(self.data['Href'] == href):
+                    new_row = {'Href': href, 'Address': address, 'Price': price, 'Info': info}
+                    self.data = self.data.append(new_row, ignore_index=True)
 
-        info_whole = [listing.find('ul', {'class': 'StyledPropertyCardHomeDetailsList-c11n-8-89-0__sc-1xvdaej-0 GlipV'}) for listing in listings]
-        info_text = [[li.text for li in ul.find_all('li')] for ul in info_whole]
-        self.data['Info'] = info_text
+            scrolled = self.scroll_down()
+
+            if not scrolled:
+                break  # If scroll_down returns False, we have reached the end of the page and exit the loop
+
+    def scroll_down(self, limit = 5): 
+        last_height = self.driver.execute_script('return document.body.scrollHeight') # get scroll height
+        scroll_counter = 0 # initialize counter at 0 
+
+        while True: 
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);") # scroll down to the bottom
+
+            sleep(5) # wait for pages to load
+
+            new_height = self.driver.execute_script("return document.body.scrollHeight") # calculate new scroll height and compare with last scroll 
+            if new_height == last_height or scroll_counter >= limit: # stop when it reaches the end or a hard stop at 5
+                break
+            last_height = new_height
+            scroll_counter += 1  # Increment scroll counter 
+
 
     def log_data(self):
         print(self.data.head(5))
@@ -78,6 +122,7 @@ class Scraper:
         self.prompt_user_for_zipcode()
         self.load_url()
         self.parse_html()
+        
         self.log_data()
         self.reset_zipcode()
         self.driver.quit()  
