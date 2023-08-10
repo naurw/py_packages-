@@ -1,6 +1,6 @@
 # Converting to more modular format 
 ## Removing draft once testing has been completed 
-## Do be advised that Zillow has a bot detection program in place, hence this will only return the first few results--use at your discretion
+## Do be advised that Zillow has a bot detection program in place--use at your discretion
 
 import os
 import pandas as pd
